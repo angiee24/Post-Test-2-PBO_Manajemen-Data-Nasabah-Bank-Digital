@@ -35,6 +35,28 @@ Mencari data nasabah secara fleksibel menggunakan input nama atau nomor rekening
 8. Keluar (Exit)
 Menghentikan dan keluar dari program.
 
+# Struktur Packages (MVC)
+
+<img width="378" height="183" alt="image" src="https://github.com/user-attachments/assets/0b49b7a9-10e2-494a-a3d6-3b799bbc1343" />
+
+Program ini menerapkan pola MVC (Model–View–Controller) dengan pembagian packages sebagai berikut:
+
+1. model
+- Berisi class Nasabah.
+- Menyimpan struktur data berupa atribut (nomorRekening, nama, saldo, mutasiRekening).
+- Menerapkan constructor untuk inisialisasi data nasabah serta getter/setter dengan access modifier private.
+- Fungsinya: merepresentasikan objek Nasabah di dalam sistem.
+
+2. service
+- Berisi class BankService.
+- Menyimpan seluruh logika CRUD (Create, Read, Update, Delete) serta fitur transaksi (Setor, Tarik, Transfer), mutasi, dan pencarian data.
+- Fungsinya: sebagai controller yang mengatur alur logika antara data (model) dan tampilan (view).
+
+3. view
+- Berisi class Main.
+- Menyimpan kode untuk menu interaktif yang digunakan oleh pengguna.
+- Fungsinya: menampilkan pilihan menu, menerima input dari pengguna, lalu memanggil fungsi yang sesuai dari service.
+
 # Output Program
 ## Menu Program
 
@@ -43,9 +65,9 @@ Menghentikan dan keluar dari program.
 Program ini berjalan dengan menampilkan delapan menu utama kepada pengguna. Opsi 1 sampai 4 digunakan untuk mengelola data dasar nasabah (tambah, lihat, ubah, hapus). Menu 5 membuka sub-menu untuk transaksi finansial, sementara menu 6 dan 7 berfungsi untuk melihat riwayat rekening dan mencari data nasabah. Program akan selalu kembali ke tampilan menu ini setelah setiap tugas selesai, hingga pengguna memilih menu 8 untuk keluar.
 
 
-<img width="427" height="315" alt="image" src="https://github.com/user-attachments/assets/f6f99899-39bb-46bb-a8f0-6ff00e6ccdb0" />
+<img width="372" height="322" alt="image" src="https://github.com/user-attachments/assets/d1b7dc74-b162-48cc-855a-b6aea122cf79" />
 
-setiap input yang bukan 1–8 akan dianggap tidak valid, lalu program otomatis mengarahkan kembali ke menu utama.
+Setiap input yang salah akan dianggap tidak valid untuk mencegah error ketika pengguna salah memasukkan data. Jika pengguna mengetik angka di luar rentang menu (misalnya 9), sistem akan menampilkan pesan "Pilihan harus antara 1 dan 8", sedangkan jika memasukkan karakter non-angka (misalnya a), sistem akan menampilkan pesan "Input tidak valid, masukkan angka!". Dengan validasi ini, program menjadi lebih aman, stabil, dan tetap berjalan meskipun terjadi kesalahan input dari pengguna.
 
 ## Menu Create (Tambah Nasabah)
 
@@ -98,6 +120,10 @@ Pada menu Setor Tunai, pengguna diminta memasukkan nomor rekening tujuan (contoh
 
 Alur ini menunjukkan penanganan kesalahan pada menu Setor Tunai. Ketika pengguna memasukkan nomor rekening yang tidak ada dalam sistem (contoh: 20), program akan melakukan pencarian dan gagal menemukan data yang cocok. Akibatnya, sistem akan membatalkan transaksi dan menampilkan pesan "GAGAL: Rekening tidak ditemukan"
 
+<img width="389" height="266" alt="image" src="https://github.com/user-attachments/assets/a2d92312-78fc-4281-bc8f-41382681fd83" />
+
+Setiap input nominal yang bukan berupa angka akan dianggap tidak valid untuk mencegah error saat transaksi. Misalnya pada menu Setor Tunai, jika pengguna memasukkan teks seperti "seratus", sistem akan menampilkan pesan "Input tidak valid, masukkan angka!" dan meminta pengguna mengulang dengan angka yang benar. Setelah pengguna mengetik jumlah yang valid (contoh: 100000), transaksi akan diproses dan saldo terbaru akan ditampilkan.
+
 ### Tarik Tunai
 <img width="680" height="150" alt="image" src="https://github.com/user-attachments/assets/6f879db1-a207-4212-be14-4be0992fc92b" />
 
@@ -111,6 +137,10 @@ Alur ini menunjukkan proses transaksi Tarik Tunai yang berhasil. Setelah memilih
 
 Alur ini menunjukkan penanganan kesalahan ketika pengguna mencoba melakukan penarikan tunai dari rekening yang tidak ada. Pengguna memasukkan nomor rekening yang tidak terdaftar di sistem (contoh: 1000). Program kemudian mencari data tersebut namun tidak berhasil menemukannya, sehingga transaksi dibatalkan dan sistem menampilkan pesan "GAGAL: Rekening tidak ditemukan"
 
+<img width="394" height="263" alt="image" src="https://github.com/user-attachments/assets/78259cdf-9f3a-469b-92d2-9a37286fd92e" />
+
+Setiap input nominal yang tidak sesuai format angka akan dianggap tidak valid untuk mencegah error pada proses transaksi. Misalnya pada menu Tarik Tunai, jika pengguna memasukkan teks seperti "seratus", sistem akan menampilkan pesan "Input tidak valid, masukkan angka!" dan meminta pengguna mengulang input. Setelah pengguna mengetik jumlah yang benar (contoh: 100000), transaksi akan berhasil diproses dan sistem menampilkan saldo terbaru dari rekening tersebut.
+
 ### Transfer Dana 
 <img width="460" height="172" alt="image" src="https://github.com/user-attachments/assets/a50a426f-9274-4851-a733-c609c735ccd8" />
 
@@ -123,6 +153,10 @@ Alur ini menunjukkan validasi penting pada fitur Transfer Dana, yaitu mencegah p
 <img width="469" height="164" alt="image" src="https://github.com/user-attachments/assets/65111d0c-94a5-460d-80da-f3d170282faa" />
 
 Alur ini menunjukkan validasi saldo pada fitur Transfer Dana. Pengguna telah memasukkan nomor rekening pengirim dan penerima yang valid, namun kemudian memasukkan jumlah transfer yang sangat besar (2000000000). Program memeriksa apakah saldo pengirim mencukupi untuk membayar jumlah transfer ditambah biaya administrasi. Karena tidak cukup, transaksi dibatalkan dan sistem menampilkan pesan "GAGAL: Saldo tidak mencukupi"
+
+<img width="380" height="279" alt="image" src="https://github.com/user-attachments/assets/5a8b528f-ccea-4ebd-a524-5836cabd4ce5" />
+
+Setiap input nominal pada fitur transfer yang tidak berbentuk angka akan dianggap tidak valid agar transaksi tidak gagal. Misalnya pada menu Transfer Dana, jika pengguna mengetik teks seperti "seratus", sistem langsung menampilkan pesan "Input tidak valid, masukkan angka!" dan meminta ulang input. Setelah pengguna memasukkan jumlah yang benar (contoh: 100000), sistem memproses transaksi dengan sukses dan menampilkan pesan "Transfer berhasil."
 
 ### Kembali Ke Menu Utama
 <img width="377" height="275" alt="image" src="https://github.com/user-attachments/assets/8e7f34c9-cd43-40f1-8b3c-d92e8bf70aa3" />
@@ -161,3 +195,50 @@ Alur ini menunjukkan hasil pencarian jika data tidak ditemukan. Ketika pengguna 
 <img width="758" height="48" alt="image" src="https://github.com/user-attachments/assets/9e41f980-1f0c-4890-9b91-25eacbdad716" />
 
 Terakhir, jika pengguna memilih menu Keluar (contoh: opsi nomor 8), program akan menampilkan pesan perpisahan "Terima kasih!". Setelah itu, perintah return dieksekusi, yang akan menghentikan perulangan utama (main loop) dan mengakhiri sesi program secara permanen.
+
+# Validasi Input
+
+## Menu Utama
+
+<img width="372" height="322" alt="image" src="https://github.com/user-attachments/assets/d1b7dc74-b162-48cc-855a-b6aea122cf79" />
+
+Setiap input yang salah akan dianggap tidak valid untuk mencegah error ketika pengguna salah memasukkan data. Jika pengguna mengetik angka di luar rentang menu (misalnya 9), sistem akan menampilkan pesan "Pilihan harus antara 1 dan 8", sedangkan jika memasukkan karakter non-angka (misalnya a), sistem akan menampilkan pesan "Input tidak valid, masukkan angka!". Dengan validasi ini, program menjadi lebih aman, stabil, dan tetap berjalan meskipun terjadi kesalahan input dari pengguna.
+
+
+## Setor Tunai
+
+<img width="389" height="266" alt="image" src="https://github.com/user-attachments/assets/a2d92312-78fc-4281-bc8f-41382681fd83" />
+
+Setiap input nominal yang bukan berupa angka akan dianggap tidak valid untuk mencegah error saat transaksi. Misalnya pada menu Setor Tunai, jika pengguna memasukkan teks seperti "seratus", sistem akan menampilkan pesan "Input tidak valid, masukkan angka!" dan meminta pengguna mengulang dengan angka yang benar. Setelah pengguna mengetik jumlah yang valid (contoh: 100000), transaksi akan diproses dan saldo terbaru akan ditampilkan.
+
+
+## Tarik Tunai
+
+<img width="394" height="263" alt="image" src="https://github.com/user-attachments/assets/78259cdf-9f3a-469b-92d2-9a37286fd92e" />
+
+Setiap input nominal yang tidak sesuai format angka akan dianggap tidak valid untuk mencegah error pada proses transaksi. Misalnya pada menu Tarik Tunai, jika pengguna memasukkan teks seperti "seratus", sistem akan menampilkan pesan "Input tidak valid, masukkan angka!" dan meminta pengguna mengulang input. Setelah pengguna mengetik jumlah yang benar (contoh: 100000), transaksi akan berhasil diproses dan sistem menampilkan saldo terbaru dari rekening tersebut.
+
+## Transfer Dana
+
+<img width="380" height="279" alt="image" src="https://github.com/user-attachments/assets/5a8b528f-ccea-4ebd-a524-5836cabd4ce5" />
+
+Setiap input nominal pada fitur transfer yang tidak berbentuk angka akan dianggap tidak valid agar transaksi tidak gagal. Misalnya pada menu Transfer Dana, jika pengguna mengetik teks seperti "seratus", sistem langsung menampilkan pesan "Input tidak valid, masukkan angka!" dan meminta ulang input. Setelah pengguna memasukkan jumlah yang benar (contoh: 100000), sistem memproses transaksi dengan sukses dan menampilkan pesan "Transfer berhasil."
+
+# Fitur Search
+
+Program ini dilengkapi dengan fitur pencarian (Search) yang memungkinkan pengguna menemukan data nasabah dengan cepat. Pencarian dapat dilakukan menggunakan nomor rekening maupun nama nasabah.
+- Jika input berupa nomor rekening, sistem akan mencocokkan secara langsung dengan data yang tersimpan.
+- Jika input berupa nama nasabah, sistem akan melakukan pencarian dengan metode case-insensitive (tidak membedakan huruf besar/kecil) dan menampilkan semua data yang mengandung kata kunci tersebut.
+  
+Jika data ditemukan, program akan menampilkan detail lengkap nasabah (nomor rekening, nama, saldo). Namun, jika tidak ada yang sesuai, sistem akan menampilkan pesan "Nasabah tidak ditemukan". Dengan adanya fitur ini, pengguna dapat mengelola dan mencari data nasabah dengan lebih efisien tanpa harus menelusuri seluruh daftar.
+
+## Menu Search (Cari Nasabah)
+
+<img width="652" height="135" alt="image" src="https://github.com/user-attachments/assets/790020ff-a68e-49ea-8107-5c3c4d311f4d" />
+
+Pada menu Cari Nasabah, pengguna dapat memasukkan kata kunci berupa Nama ataupun Nomor Rekening (contoh: REK2025001). Program kemudian akan melakukan iterasi pada seluruh data nasabah. Jika ditemukan data yang cocok dengan kata kunci, baik pada nama maupun nomor rekening, maka detail lengkap dari nasabah tersebut akan ditampilkan di bawah "Hasil Pencarian".
+
+<img width="425" height="143" alt="image" src="https://github.com/user-attachments/assets/6e9e6b32-617e-4914-8221-f80777d8232d" />
+
+Alur ini menunjukkan hasil pencarian jika data tidak ditemukan. Ketika pengguna memasukkan kata kunci yang tidak cocok dengan nama atau nomor rekening manapun yang ada di dalam sistem (contoh: Angie), program akan menyelesaikan proses pencarian tanpa menemukan hasil. Sebagai umpan balik, sistem akan menampilkan pesan informatif "Nasabah tidak ditemukan".
+
