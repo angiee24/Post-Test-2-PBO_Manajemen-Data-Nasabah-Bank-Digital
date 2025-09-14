@@ -43,17 +43,20 @@ Program ini menerapkan pola MVC (Model–View–Controller) dengan pembagian pac
 
 1. model
 - Berisi class Nasabah.
+- Menunjukkan atribut, constructor, access modifier.
 - Menyimpan struktur data berupa atribut (nomorRekening, nama, saldo, mutasiRekening).
 - Menerapkan constructor untuk inisialisasi data nasabah serta getter/setter dengan access modifier private.
 - Fungsinya: merepresentasikan objek Nasabah di dalam sistem.
 
 2. service
 - Berisi class BankService.
+- Menunjukkan logika transaksi + validasi input nominal.
 - Menyimpan seluruh logika CRUD (Create, Read, Update, Delete) serta fitur transaksi (Setor, Tarik, Transfer), mutasi, dan pencarian data.
 - Fungsinya: sebagai controller yang mengatur alur logika antara data (model) dan tampilan (view).
 
 3. view
 - Berisi class Main.
+- Menunjukkan interaksi user dengan program.
 - Menyimpan kode untuk menu interaktif yang digunakan oleh pengguna.
 - Fungsinya: menampilkan pilihan menu, menerima input dari pengguna, lalu memanggil fungsi yang sesuai dari service.
 
